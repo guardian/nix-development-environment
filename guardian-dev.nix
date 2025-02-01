@@ -35,7 +35,20 @@
               acc + " \";\" split-window -v \"${command}/bin/${command.name}\"")
             "" commands;
         };
-      in commands
-      ++ [ pkgs.tmux pkgs.jq listCommandsJson listCommands runAllTmux ];
+
+        runAllBackground = pkgs.writeShellApplication {
+          name = "run-all-background";
+          runtimeInputs = [ ];
+          text = builtins.concatStringsSep " &\n"
+            (builtins.map (command: "${command}/bin/${command.name}") commands);
+        };
+      in commands ++ [
+        pkgs.tmux
+        pkgs.jq
+        listCommandsJson
+        listCommands
+        runAllTmux
+        runAllBackground
+      ];
     };
 }
