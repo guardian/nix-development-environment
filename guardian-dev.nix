@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  devEnv = { name, commands, ... }:
+  devEnv = { name, commands, extraInputs ? [ ], ... }:
     pkgs.mkShellNoCC {
       nativeBuildInputs = let
         allCommandsJson = pkgs.writeTextFile {
@@ -42,7 +42,7 @@
           text = builtins.concatStringsSep " &\n"
             (builtins.map (command: "${command}/bin/${command.name}") commands);
         };
-      in commands ++ [
+      in commands ++ extraInputs ++ [
         pkgs.tmux
         pkgs.jq
         listCommandsJson
