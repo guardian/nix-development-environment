@@ -32,7 +32,8 @@
                 ''rename-session "${name}"''
               ]
             else
-              acc + " \";\" split-window -v \"${command}/bin/${command.name}\"")
+              acc
+              + " \";\" new-window -n ${command.name} \"${command}/bin/${command.name}\"")
             "" commands;
         };
 
