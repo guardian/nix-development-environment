@@ -28,7 +28,7 @@
             if acc == "" then
               builtins.concatStringsSep " \";\" " [
                 ''tmux new-session "${command}/bin/${command.name}"''
-                "set-option remain-on-exit on"
+                "set-option -g remain-on-exit on"
                 ''rename-session "${name}"''
               ]
             else
